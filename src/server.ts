@@ -1,16 +1,18 @@
-import mongoose from 'mongoose'
-import config from './app/config'
-import app from './app'
+import app from './app';
+import colors from 'colors';
+import mongoose from 'mongoose';
+import config from './app/config';
 
-async function main() {
+(async () => {
   try {
-    await mongoose.connect(config.database_url as string)
+    await mongoose.connect(config.database_url as string).then(() => {
+      console.log(colors.red('Database connection is successful 🛢'));
+    });
 
     app.listen(config.port, () => {
-      console.log(`Server is listening on port ${config.port}`)
-    })
+      console.log(colors.yellow(`Server is running on port ${config.port} 😎`));
+    });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
-main()
+})();
